@@ -1,0 +1,16 @@
+{
+  "name": "phonebook",
+  "version": "1.0.0",
+  "description": "Exercises 3.1-3.6 backend server",
+  "license": "ISC",
+  "author": "DCsillag",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
