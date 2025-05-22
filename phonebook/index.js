@@ -1,6 +1,6 @@
 require('dotenv').config()
 const express = require('express')
-const morgan = require('morgan')
+// const morgan = require('morgan')
 const cors = require('cors')
 const app = express()
 const Person = require('./models/Person')
@@ -23,33 +23,34 @@ morgan.token('post-data', (req) => {
 app.use(morgan(':method :url :date[iso] :status :res[content-length] - :response-time ms :post-data'))
 
 let data = [
-    { 
+    {
       "id": "1",
-      "name": "Arto Hellas", 
+      "name": "Arto Hellas",
       "number": "040-123456"
     },
-    { 
+    {
       "id": "2",
-      "name": "Ada Lovelace", 
+      "name": "Ada Lovelace",
       "number": "39-44-5323523"
     },
-    { 
+    {
       "id": "3",
-      "name": "Dan Abramov", 
+      "name": "Dan Abramov",
       "number": "12-43-234345"
     },
-    { 
+    {
       "id": "4",
-      "name": "Mary Poppendieck", 
+      "name": "Mary Poppendieck",
       "number": "39-23-6423122"
     }
 ]*/
-// Send all data in the data object via JSON. 
-app.get('/api/persons', (request,response,next) => {  
-  Person.find({}).then(persons => {
-    response.json(persons)
-  })
-  .catch(error => next(error))
+// Send all data in the data object via JSON.
+app.get('/api/persons', (request,response,next) => {
+  Person.find({})
+    .then(persons => {
+      response.json(persons)
+    })
+    .catch(error => next(error))
 })
 
 // Send the data for one person
@@ -77,22 +78,23 @@ app.post('/api/persons', (request, response, next) => {
     number: body.number
   })
 
-  person.save().then(savedPerson => {
-    response.json(savedPerson)
-  })
-  .catch(error => next(error))
+  person.save()
+    .then(savedPerson => {
+      response.json(savedPerson)
+    })
+    .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndDelete(request.params.id)
-    .then(result => {
+    .then(() => {
       response.status(204).end()
     })
     .catch(error => next(error))
 })
 
 app.put('/api/persons/:id', (request, response, next) => {
-  const {name, number} = request.body
+  const { name, number } = request.body
 
   Person.findById(request.params.id)
     .then(person => {
@@ -123,11 +125,11 @@ app.get('/info', (request, response, next) => {
 })
 
 // Send textual data about the number of people and time.
-/* Old methods that are built for a non DB / local backend 
+/* Old methods that are built for a non DB / local backend
 app.get('/info', (request, response) => {
     response.set('Content-type', 'text/html')
     response.send(
-        `Phonebook has info for ${data.length} people <br> 
+        `Phonebook has info for ${data.length} people <br>
         ${new Date()}`
     )
 })
