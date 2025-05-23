@@ -13,10 +13,10 @@ mongoose.connect(url)
     })
 
 const isAustralianPhone = v => {
-    if (typeof v !== 'string') return false;
-    const cleaned = v.replace(/[\s\-().]/g, '');
-    return /^(\+61|0)[23784]\d{8}$/.test(cleaned);
-};
+    if (typeof v !== 'string') return false
+    const cleaned = v.replace(/[\s\-().]/g, '')
+    return /^(\+61|0)[23784]\d{8}$/.test(cleaned)
+}
 
 const personSchema = new mongoose.Schema({
     name: {
@@ -28,17 +28,17 @@ const personSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Phone number is required'],
         validate: {
-          validator: isAustralianPhone,
-          message: props => `${props.value} is not a valid Australian phone number!`
+            validator: isAustralianPhone,
+            message: props => `${props.value} is not a valid Australian phone number!`
         }
-      }
+    }
 })
 
 personSchema.set('toJSON', {
     transform: (document, returnedObject) => {
-      returnedObject.id = returnedObject._id.toString()
-      delete returnedObject._id
-      delete returnedObject.__v
+        returnedObject.id = returnedObject._id.toString()
+        delete returnedObject._id
+        delete returnedObject.__v
     }
 })
 
